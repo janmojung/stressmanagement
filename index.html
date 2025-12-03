@@ -12,12 +12,6 @@
         .fade-in { animation: fadeIn 0.5s ease-in-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         
-        /* Custom flowchart connector styles */
-        .connector-line {
-            position: absolute;
-            z-index: 0;
-            background-color: #e5e7eb;
-        }
         .active-stage {
             border-color: #3b82f6;
             background-color: #eff6ff;
@@ -47,49 +41,55 @@
     <main class="flex-1 flex flex-col md:flex-row h-full overflow-hidden relative">
         
         <!-- Left Panel: Visualization (The Model) -->
-        <!-- Fixed: Removed absolute positioning for title and adjusted flex layout to prevent overlap -->
         <div class="w-full md:w-1/3 bg-white border-r border-slate-200 p-6 flex flex-col hidden md:flex z-10 relative">
             <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-6 shrink-0">Modell-Status</h3>
             
-            <div class="flex-1 flex flex-col items-center justify-center gap-8 w-full max-w-xs mx-auto relative z-10 overflow-y-auto">
+            <div class="flex-1 flex flex-col items-center justify-start gap-6 w-full max-w-xs mx-auto relative z-10 overflow-y-auto pb-6">
                 <!-- Step 0: Stressor -->
-                <div id="vis-stressor" class="w-full p-4 border-2 border-slate-200 rounded-xl text-center transition-all duration-300 bg-white shrink-0">
-                    <div class="text-2xl mb-1">⚡</div>
-                    <div class="font-bold">Stressor</div>
-                    <div class="text-xs text-slate-500">Reiz aus der Umwelt</div>
+                <div id="vis-stressor" class="w-full p-3 border-2 border-slate-200 rounded-xl text-center transition-all duration-300 bg-white shrink-0">
+                    <div class="text-xl mb-1">⚡</div>
+                    <div class="font-bold text-sm">Stressor</div>
                 </div>
 
-                <div class="h-8 w-0.5 bg-slate-300 shrink-0"></div>
+                <div class="h-4 w-0.5 bg-slate-300 shrink-0"></div>
 
                 <!-- Step 1: Primary Appraisal -->
-                <div id="vis-primary" class="w-full p-4 border-2 border-slate-200 rounded-xl text-center transition-all duration-300 bg-white shrink-0">
-                    <div class="font-bold text-sm uppercase text-slate-500 mb-1">Schritt 1</div>
-                    <div class="font-bold">Primäre Bewertung</div>
-                    <div class="text-xs text-slate-500">Bedrohlich? Herausfordernd? Irrelevant?</div>
+                <div id="vis-primary" class="w-full p-3 border-2 border-slate-200 rounded-xl text-center transition-all duration-300 bg-white shrink-0">
+                    <div class="font-bold text-xs uppercase text-slate-500 mb-1">Schritt 1</div>
+                    <div class="font-bold text-sm">Primäre Bewertung</div>
+                    <div class="text-[10px] text-slate-500">Bedrohlich?</div>
                 </div>
 
-                <div class="h-8 w-0.5 bg-slate-300 shrink-0"></div>
+                <div class="h-4 w-0.5 bg-slate-300 shrink-0"></div>
 
                 <!-- Step 2: Secondary Appraisal -->
-                <div id="vis-secondary" class="w-full p-4 border-2 border-slate-200 rounded-xl text-center transition-all duration-300 bg-white shrink-0">
-                    <div class="font-bold text-sm uppercase text-slate-500 mb-1">Schritt 2</div>
-                    <div class="font-bold">Sekundäre Bewertung</div>
-                    <div class="text-xs text-slate-500">Ressourcen-Check</div>
+                <div id="vis-secondary" class="w-full p-3 border-2 border-slate-200 rounded-xl text-center transition-all duration-300 bg-white shrink-0">
+                    <div class="font-bold text-xs uppercase text-slate-500 mb-1">Schritt 2</div>
+                    <div class="font-bold text-sm">Sekundäre Bewertung</div>
+                    <div class="text-[10px] text-slate-500">Ressourcen?</div>
                 </div>
 
-                <div class="h-8 w-0.5 bg-slate-300 shrink-0"></div>
+                <div class="h-4 w-0.5 bg-slate-300 shrink-0"></div>
 
                 <!-- Step 3: Coping -->
-                <div id="vis-coping" class="w-full p-4 border-2 border-slate-200 rounded-xl text-center transition-all duration-300 bg-white shrink-0">
-                    <div class="font-bold text-sm uppercase text-slate-500 mb-1">Schritt 3</div>
-                    <div class="font-bold">Coping / Bewältigung</div>
-                    <div class="text-xs text-slate-500">Problem- vs. Emotionsorientiert</div>
+                <div id="vis-coping" class="w-full p-3 border-2 border-slate-200 rounded-xl text-center transition-all duration-300 bg-white shrink-0">
+                    <div class="font-bold text-xs uppercase text-slate-500 mb-1">Schritt 3</div>
+                    <div class="font-bold text-sm">Coping</div>
+                    <div class="text-[10px] text-slate-500">Handlung</div>
+                </div>
+
+                <div class="h-4 w-0.5 bg-slate-300 shrink-0"></div>
+
+                <!-- Step 4: Reappraisal (NEW) -->
+                <div id="vis-reappraisal" class="w-full p-3 border-2 border-slate-200 rounded-xl text-center transition-all duration-300 bg-white shrink-0">
+                    <div class="font-bold text-xs uppercase text-slate-500 mb-1">Schritt 4</div>
+                    <div class="font-bold text-sm">Neubewertung</div>
+                    <div class="text-[10px] text-slate-500">Reappraisal</div>
                 </div>
             </div>
         </div>
 
         <!-- Right Panel: Interaction Area -->
-        <!-- Fixed: Removed flex center from container, added scrolling wrapper with padding-bottom -->
         <div class="w-full md:w-2/3 bg-slate-50 overflow-y-auto relative scroll-smooth">
             
             <!-- Wrapper for safe centering and mobile padding -->
@@ -103,20 +103,24 @@
                     <h2 class="text-2xl md:text-3xl font-bold mb-4 text-slate-800">Willkommen im Stress-Labor</h2>
                     <p class="text-base md:text-lg text-slate-600 mb-8 leading-relaxed">
                         Trainieren Sie Ihr Verständnis des transaktionalen Stressmodells nach Lazarus. 
-                        Analysieren Sie Situationen aus dem Studienalltag.
+                        Analysieren Sie die Szenarien Schritt für Schritt anhand standardisierter Kategorien.
                     </p>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4 mb-8 text-left">
-                        <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-200">
-                            <div class="font-bold text-blue-600 mb-1">1. Primäre Bewertung</div>
-                            <p class="text-xs md:text-sm text-slate-500">Was bedeutet die Situation für mich?</p>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4 mb-8 text-left">
+                        <div class="bg-white p-3 rounded-lg shadow-sm border border-slate-200">
+                            <div class="font-bold text-blue-600 text-xs md:text-sm">1. Primär</div>
+                            <p class="text-[10px] md:text-xs text-slate-500">Gefahr?</p>
                         </div>
-                        <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-200">
-                            <div class="font-bold text-blue-600 mb-1">2. Sekundäre Bewertung</div>
-                            <p class="text-xs md:text-sm text-slate-500">Kann ich die Situation bewältigen?</p>
+                        <div class="bg-white p-3 rounded-lg shadow-sm border border-slate-200">
+                            <div class="font-bold text-blue-600 text-xs md:text-sm">2. Sekundär</div>
+                            <p class="text-[10px] md:text-xs text-slate-500">Ressourcen?</p>
                         </div>
-                        <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-200">
-                            <div class="font-bold text-blue-600 mb-1">3. Coping</div>
-                            <p class="text-xs md:text-sm text-slate-500">Wie gehe ich damit um?</p>
+                        <div class="bg-white p-3 rounded-lg shadow-sm border border-slate-200">
+                            <div class="font-bold text-blue-600 text-xs md:text-sm">3. Coping</div>
+                            <p class="text-[10px] md:text-xs text-slate-500">Handlung</p>
+                        </div>
+                        <div class="bg-white p-3 rounded-lg shadow-sm border border-slate-200">
+                            <div class="font-bold text-blue-600 text-xs md:text-sm">4. Neubewertung</div>
+                            <p class="text-[10px] md:text-xs text-slate-500">Fazit</p>
                         </div>
                     </div>
                     <button onclick="app.startGame()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-10 rounded-full shadow-lg transition transform hover:scale-105 w-full md:w-auto text-lg">
@@ -199,85 +203,173 @@
         const appData = [
             {
                 id: 1,
-                topic: "Prüfungsphase",
-                title: "Die kurzfristige Änderung",
-                desc: "Prof. Müller kündigt zwei Wochen vor der Klausur an, dass ein komplett neues Buchkapitel prüfungsrelevant sein wird.",
-                thought: "Oh nein! Das schaffe ich niemals in der Zeit. Wenn ich durchfalle, verliere ich mein Stipendium!",
+                topic: "Klausurphase (Standard)",
+                title: "Der Klassiker",
+                desc: "Prof. Müller kündigt kurz vor knapp neuen Stoff an.",
+                thought: "Das schaffe ich niemals in der Zeit. Wenn ich durchfalle, verliere ich mein Stipendium!",
                 steps: [
                     {
                         type: "primary",
-                        question: "Wie bewertet der Studierende die Situation primär?",
+                        question: "Schritt 1: Primäre Bewertung der Situation.",
                         options: [
-                            { text: "Als irrelevant", correct: false, feedback: "Falsch. Es hat direkte Konsequenzen für ihn." },
-                            { text: "Als positiv / Herausforderung", correct: false, feedback: "Der Gedanke 'Das schaffe ich nie' deutet nicht auf eine positive Herausforderung hin." },
-                            { text: "Als Bedrohung / Schaden", correct: true, feedback: "Richtig! Er antizipiert einen potenziellen Schaden (Verlust des Stipendiums) und hat Angst." }
+                            { text: "Bedrohung/Verlust", correct: true, feedback: "Richtig. Die Antizipation des Stipendienverlusts ist eine Bedrohung." },
+                            { text: "Herausforderung", correct: false, feedback: "Die Panik ('niemals') spricht gegen eine positive Herausforderung." },
+                            { text: "Irrelevant", correct: false, feedback: "Es hat direkte Konsequenzen, ist also nicht irrelevant." }
                         ]
                     },
                     {
                         type: "secondary",
-                        question: "Welche Ressourcen-Einschätzung (Sekundäre Bewertung) liegt dem Gedanken zugrunde?",
+                        question: "Schritt 2: Sekundäre Bewertung (Ressourcen-Check).",
                         options: [
-                            { text: "Ressourcen reichen aus", correct: false, feedback: "Er sagt explizit 'Das schaffe ich niemals'." },
-                            { text: "Ressourcen reichen nicht aus", correct: true, feedback: "Korrekt. Die wahrgenommenen Anforderungen übersteigen die wahrgenommenen Fähigkeiten/Zeit." }
+                            { text: "Ressourcen < Anforderung", correct: true, feedback: "Korrekt. Die Anforderungen übersteigen die wahrgenommenen Fähigkeiten ('schaffe ich nie')." },
+                            { text: "Ressourcen > Anforderung", correct: false, feedback: "Er fühlt sich den Anforderungen nicht gewachsen." }
                         ]
                     },
                     {
                         type: "coping",
-                        question: "Er beschließt, den Professor nach dem Seminar um eine Eingrenzung des Stoffs zu bitten. Welches Coping ist das?",
+                        question: "Schritt 3: Coping. Er bittet den Prof um Eingrenzung.",
                         options: [
-                            { text: "Problemorientiertes Coping", correct: true, feedback: "Richtig. Er versucht aktiv, die Situation (den Stressor) zu verändern." },
-                            { text: "Emotionsorientiertes Coping", correct: false, feedback: "Er versucht nicht nur seine Gefühle zu regulieren, sondern das Problem an der Wurzel zu packen." }
+                            { text: "Problemorientiert", correct: true, feedback: "Richtig, er versucht die Situation aktiv zu ändern." },
+                            { text: "Emotionsorientiert", correct: false, feedback: "Er ändert nicht nur sein Gefühl, sondern die Anforderung selbst." }
+                        ]
+                    },
+                    {
+                        type: "reappraisal",
+                        question: "Schritt 4: Neubewertung. Der Prof stimmt zu.",
+                        options: [
+                            { text: "Herausforderung", correct: true, feedback: "Richtig. Die Aufgabe ist nun machbar und wird zur Herausforderung." },
+                            { text: "Bedrohung/Verlust", correct: false, feedback: "Die akute Gefahr ist durch die Eingrenzung gebannt." },
+                            { text: "Irrelevant", correct: false, feedback: "Die Klausur ist weiterhin wichtig." }
                         ]
                     }
                 ]
             },
             {
                 id: 2,
-                topic: "Präsentation",
-                title: "Das Referat",
-                desc: "Du musst morgen ein Referat halten. Du bist gut vorbereitet, aber hast leichtes Lampenfieber.",
-                thought: "Okay, mein Herz klopft, aber ich habe das Thema drauf. Das ist meine Chance, eine gute Note zu holen.",
+                topic: "Datenverlust (Ausreichende Ressourcen)",
+                title: "Der Laptop-Crash",
+                desc: "Drei Tage vor Abgabe der Hausarbeit stürzt dein Laptop ab und lässt sich nicht mehr starten.",
+                thought: "Scheiße! Meine Arbeit! ... Warte, ich habe gestern Abend ein Backup gemacht.",
                 steps: [
                     {
                         type: "primary",
-                        question: "Wie wird der Stressor (Referat) hier bewertet?",
+                        question: "Schritt 1: Primäre Bewertung des ersten Schocks.",
                         options: [
-                            { text: "Als Bedrohung", correct: false, feedback: "Die Angst überwiegt hier nicht." },
-                            { text: "Als Herausforderung", correct: true, feedback: "Exakt. Es wird als schwierig, aber machbar und potenziell gewinnbringend (gute Note) gesehen." },
-                            { text: "Als irrelevant", correct: false, feedback: "Es ist wichtig für die Note, also nicht irrelevant." }
+                            { text: "Bedrohung/Verlust", correct: true, feedback: "Genau. Im ersten Moment wird ein Verlust antizipiert." },
+                            { text: "Herausforderung", correct: false, feedback: "Dies ist keine positive Challenge." },
+                            { text: "Irrelevant", correct: false, feedback: "Die Arbeit ist wichtig." }
                         ]
                     },
                     {
-                        type: "coping",
-                        question: "Kurz vor dem Vortrag atmest du tief durch, um den Puls zu senken. Welche Form der Bewältigung ist das?",
+                        type: "secondary",
+                        question: "Schritt 2: Sekundäre Bewertung (Ressourcen-Check mit Backup).",
                         options: [
-                            { text: "Problemorientiert", correct: false, feedback: "Das Atmen ändert nichts an der Aufgabe selbst." },
-                            { text: "Emotionsorientiert", correct: true, feedback: "Richtig. Ziel ist die Regulation der körperlichen/emotionalen Erregung." }
+                            { text: "Ressourcen > Anforderung", correct: true, feedback: "Richtig. Das Backup (Ressource) löst das Problem vollständig. Coping und Neubewertung entfallen, da der Stressor neutralisiert ist." },
+                            { text: "Ressourcen < Anforderung", correct: false, feedback: "Das Backup ist vorhanden und funktional." }
                         ]
                     }
                 ]
             },
             {
                 id: 3,
-                topic: "WG-Leben",
+                topic: "WG-Leben (Dysfunktional)",
                 title: "Der Abwasch-Streit",
-                desc: "Dein Mitbewohner hat schon wieder nicht abgespült. Die Küche sieht chaotisch aus.",
-                thought: "Das nervt mich tierisch! Aber eigentlich habe ich gerade keine Zeit, mich darüber aufzuregen, ich gehe einfach in die Bibliothek.",
+                desc: "Die Küche ist dreckig. Du bist gestresst wegen einer Klausur.",
+                thought: "Das nervt mich tierisch! Ich kann mich jetzt nicht damit befassen. Ich trinke erst mal ein Bier, um runterzukommen.",
                 steps: [
                     {
                         type: "primary",
-                        question: "Der Gedanke 'Ich habe keine Zeit mich aufzuregen' führt zu welcher Neubewertung?",
+                        question: "Schritt 1: Primäre Bewertung der schmutzigen Küche.",
                         options: [
-                            { text: "Umwertung zu Irrelevant (temporär)", correct: true, feedback: "Genau. Um Stress zu vermeiden, wird die Wichtigkeit der Situation für den Moment herabgestuft." },
-                            { text: "Bedrohung", correct: false, feedback: "Er fühlt sich genervt, aber nicht bedroht." }
+                            { text: "Bedrohung/Verlust", correct: true, feedback: "Ja, im Sinne eines 'Daily Hassle', der das Wohlbefinden bedroht." },
+                            { text: "Irrelevant", correct: false, feedback: "Wer genervt ist, dem ist es nicht egal." },
+                            { text: "Herausforderung", correct: false, feedback: "Es wird nicht als positive Aufgabe gesehen." }
+                        ]
+                    },
+                    {
+                        type: "secondary",
+                        question: "Schritt 2: Sekundäre Bewertung der zeitlichen Ressourcen.",
+                        options: [
+                            { text: "Ressourcen < Anforderung", correct: true, feedback: "Genau. Die Ressource 'Zeit/Energie' fehlt für den Konflikt." },
+                            { text: "Ressourcen > Anforderung", correct: false, feedback: "Er hat keine Kapazität dafür." }
                         ]
                     },
                     {
                         type: "coping",
-                        question: "In die Bibliothek zu gehen ist in diesem Kontext welches Coping (in Bezug auf den Abwasch)?",
+                        question: "Schritt 3: Coping (Bier trinken / Vermeidung).",
                         options: [
-                            { text: "Problemorientiert (Angriff)", correct: false, feedback: "Das Problem (der Abwasch) bleibt bestehen." },
-                            { text: "Emotionsorientiert (Vermeidung/Ablenkung)", correct: true, feedback: "Richtig. Durch die räumliche Trennung wird die negative Emotion reguliert, das Problem aber nicht gelöst." }
+                            { text: "Emotionsorientiert", correct: true, feedback: "Richtig. Vermeidung und Substanzkonsum regulieren nur das Gefühl, nicht das Problem." },
+                            { text: "Problemorientiert", correct: false, feedback: "Die Küche bleibt dreckig." }
+                        ]
+                    },
+                    {
+                        type: "reappraisal",
+                        question: "Schritt 4: Neubewertung am nächsten Morgen (Küche immer noch dreckig).",
+                        options: [
+                            { text: "Bedrohung/Verlust", correct: true, feedback: "Korrekt. Das Problem wurde nicht gelöst, der Stressor besteht fort." },
+                            { text: "Irrelevant", correct: false, feedback: "Es stört immer noch." },
+                            { text: "Herausforderung", correct: false, feedback: "Es ist immer noch keine positive Aufgabe." }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 4,
+                topic: "Lernen (Sozial)",
+                title: "Das komplexe Paper",
+                desc: "Du verstehst den Text nicht und fühlst dich dumm.",
+                thought: "Ich bin zu dumm dafür. Das lerne ich nie! Ich ruf mal Anna an.",
+                steps: [
+                    {
+                        type: "primary",
+                        question: "Schritt 1: Primäre Bewertung.",
+                        options: [
+                            { text: "Bedrohung/Verlust", correct: true, feedback: "Richtig. Bedrohung des Selbstwertgefühls ('bin zu dumm')." },
+                            { text: "Herausforderung", correct: false, feedback: "Er traut es sich initial nicht zu." },
+                            { text: "Irrelevant", correct: false, feedback: "Er muss es lernen." }
+                        ]
+                    },
+                    {
+                        type: "secondary",
+                        question: "Schritt 2: Sekundäre Bewertung (eigene Fähigkeiten).",
+                        options: [
+                            { text: "Ressourcen < Anforderung", correct: true, feedback: "Er glaubt, es alleine nicht zu schaffen." },
+                            { text: "Ressourcen > Anforderung", correct: false, feedback: "" }
+                        ]
+                    },
+                    {
+                        type: "coping",
+                        question: "Schritt 3: Coping (Hilfe suchen).",
+                        options: [
+                            { text: "Problemorientiert", correct: true, feedback: "Genau. Soziale Unterstützung zur Problemlösung nutzen." },
+                            { text: "Emotionsorientiert", correct: false, feedback: "" }
+                        ]
+                    },
+                    {
+                        type: "reappraisal",
+                        question: "Schritt 4: Neubewertung nach der Erklärung.",
+                        options: [
+                            { text: "Herausforderung", correct: true, feedback: "Mit der Hilfe wird die Aufgabe machbar und positiv besetzt." },
+                            { text: "Bedrohung/Verlust", correct: false, feedback: "Die Angst ist gewichen." },
+                            { text: "Irrelevant", correct: false, feedback: "" }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 5,
+                topic: "Campus-News",
+                title: "Die neue Prüfungsordnung",
+                desc: "Ein Aushang informiert über strengere Regeln für Erstsemester. Du bist bereits im 5. Semester und hast Bestandsschutz.",
+                thought: "Das ist hart für die Neuen, aber mich betrifft das zum Glück überhaupt nicht mehr.",
+                steps: [
+                    {
+                        type: "primary",
+                        question: "Schritt 1: Primäre Bewertung.",
+                        options: [
+                            { text: "Irrelevant", correct: true, feedback: "Richtig. Da keine eigenen Ziele bedroht sind, endet der Prozess hier ohne Stress." },
+                            { text: "Bedrohung/Verlust", correct: false, feedback: "Es gibt keine negativen Konsequenzen für dich." },
+                            { text: "Herausforderung", correct: false, feedback: "Es gibt keine Aufgabe zu bewältigen." }
                         ]
                     }
                 ]
@@ -442,20 +534,26 @@
 
             highlightModelStage: function(type) {
                 // Reset all
-                ['vis-stressor', 'vis-primary', 'vis-secondary', 'vis-coping'].forEach(id => {
-                    document.getElementById(id).classList.remove('active-stage', 'border-blue-500');
-                    document.getElementById(id).classList.add('border-slate-200');
+                ['vis-stressor', 'vis-primary', 'vis-secondary', 'vis-coping', 'vis-reappraisal'].forEach(id => {
+                    const el = document.getElementById(id);
+                    if(el) {
+                        el.classList.remove('active-stage', 'border-blue-500');
+                        el.classList.add('border-slate-200');
+                    }
                 });
 
                 let activeId = '';
                 if (type === 'primary') activeId = 'vis-primary';
                 else if (type === 'secondary') activeId = 'vis-secondary';
                 else if (type === 'coping') activeId = 'vis-coping';
+                else if (type === 'reappraisal') activeId = 'vis-reappraisal';
                 
                 if(activeId) {
                     const el = document.getElementById(activeId);
-                    el.classList.add('active-stage', 'border-blue-500');
-                    el.classList.remove('border-slate-200');
+                    if(el) {
+                        el.classList.add('active-stage', 'border-blue-500');
+                        el.classList.remove('border-slate-200');
+                    }
                 }
             }
         };
