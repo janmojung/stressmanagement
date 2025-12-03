@@ -26,19 +26,20 @@
         }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 h-screen flex flex-col overflow-hidden">
+<body class="bg-slate-50 text-slate-800 h-[100dvh] flex flex-col overflow-hidden">
 
     <!-- Header -->
-    <header class="bg-white border-b border-slate-200 p-4 flex justify-between items-center shadow-sm z-10">
+    <header class="bg-white border-b border-slate-200 p-4 flex justify-between items-center shadow-sm z-20 relative">
         <div class="flex items-center gap-3">
-            <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold">L</div>
+            <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold shrink-0">L</div>
             <h1 class="text-xl font-bold text-slate-800 hidden sm:block">Transaktionales Stressmodell <span class="text-slate-400 font-normal">| Lazarus & Folkman</span></h1>
+            <h1 class="text-lg font-bold text-slate-800 sm:hidden">Stressmodell Trainer</h1>
         </div>
         <div class="flex items-center gap-4">
-            <div class="bg-slate-100 px-4 py-2 rounded-full font-semibold text-sm">
+            <div class="bg-slate-100 px-3 py-1 md:px-4 md:py-2 rounded-full font-semibold text-sm whitespace-nowrap">
                 Score: <span id="score-display" class="text-blue-600">0</span>
             </div>
-            <button onclick="app.resetGame()" class="text-slate-500 hover:text-red-500 transition"><i class="fas fa-redo"></i> Neustart</button>
+            <button onclick="app.resetGame()" class="text-slate-500 hover:text-red-500 transition"><i class="fas fa-redo"></i> <span class="hidden sm:inline">Neustart</span></button>
         </div>
     </header>
 
@@ -46,7 +47,7 @@
     <main class="flex-1 flex flex-col md:flex-row h-full overflow-hidden relative">
         
         <!-- Left Panel: Visualization (The Model) -->
-        <div class="w-full md:w-1/3 bg-white border-r border-slate-200 p-6 flex flex-col items-center justify-center relative overflow-y-auto hidden md:flex">
+        <div class="w-full md:w-1/3 bg-white border-r border-slate-200 p-6 flex flex-col items-center justify-center relative overflow-y-auto hidden md:flex z-10">
             <h3 class="absolute top-4 left-4 text-xs font-bold text-slate-400 uppercase tracking-wider">Modell-Status</h3>
             
             <div class="flex flex-col items-center gap-8 w-full max-w-xs relative z-10">
@@ -87,104 +88,109 @@
         </div>
 
         <!-- Right Panel: Interaction Area -->
-        <div class="w-full md:w-2/3 bg-slate-50 p-6 md:p-12 overflow-y-auto flex flex-col items-center justify-center">
+        <!-- Fixed: Removed flex center from container, added scrolling wrapper with padding-bottom -->
+        <div class="w-full md:w-2/3 bg-slate-50 overflow-y-auto relative scroll-smooth">
             
-            <!-- Welcome Screen -->
-            <div id="screen-welcome" class="max-w-2xl text-center fade-in">
-                <div class="mb-6 inline-block p-4 bg-blue-100 rounded-full text-blue-600 text-4xl">
-                    <i class="fas fa-brain"></i>
-                </div>
-                <h2 class="text-3xl font-bold mb-4 text-slate-800">Willkommen im Stress-Labor</h2>
-                <p class="text-lg text-slate-600 mb-8 leading-relaxed">
-                    Trainieren Sie Ihr Verständnis des transaktionalen Stressmodells nach Lazarus. 
-                    Analysieren Sie Situationen aus dem Studienalltag und ordnen Sie Bewertungen und Bewältigungsstrategien richtig zu.
-                </p>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8 text-left">
-                    <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-200">
-                        <div class="font-bold text-blue-600 mb-1">1. Primäre Bewertung</div>
-                        <p class="text-sm text-slate-500">Was bedeutet die Situation für mich?</p>
-                    </div>
-                    <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-200">
-                        <div class="font-bold text-blue-600 mb-1">2. Sekundäre Bewertung</div>
-                        <p class="text-sm text-slate-500">Kann ich die Situation bewältigen?</p>
-                    </div>
-                    <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-200">
-                        <div class="font-bold text-blue-600 mb-1">3. Coping</div>
-                        <p class="text-sm text-slate-500">Wie gehe ich damit um?</p>
-                    </div>
-                </div>
-                <button onclick="app.startGame()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transition transform hover:scale-105">
-                    Training starten
-                </button>
-            </div>
+            <!-- Wrapper for safe centering and mobile padding -->
+            <div class="min-h-full w-full flex flex-col items-center justify-center p-4 md:p-12 pb-32">
 
-            <!-- Game Container -->
-            <div id="screen-game" class="w-full max-w-3xl hidden fade-in">
-                
-                <!-- Scenario Card -->
-                <div class="bg-white rounded-2xl shadow-lg border border-slate-200 p-6 mb-6 relative overflow-hidden">
-                    <div class="absolute top-0 left-0 w-2 h-full bg-blue-500"></div>
-                    <div class="flex justify-between items-start mb-2">
-                        <span class="text-xs font-bold tracking-wider text-blue-600 uppercase">Fallbeispiel <span id="scenario-count">1</span>/5</span>
-                        <span class="text-xs font-bold text-slate-400" id="scenario-topic">Thema</span>
+                <!-- Welcome Screen -->
+                <div id="screen-welcome" class="max-w-2xl text-center fade-in w-full">
+                    <div class="mb-6 inline-block p-4 bg-blue-100 rounded-full text-blue-600 text-4xl">
+                        <i class="fas fa-brain"></i>
                     </div>
-                    <h3 class="text-2xl font-bold text-slate-800 mb-3" id="scenario-title">Titel</h3>
-                    <p class="text-slate-600 text-lg leading-relaxed" id="scenario-desc">Beschreibung...</p>
-                    
-                    <!-- Character Thought Bubble (Dynamic) -->
-                    <div class="mt-6 bg-slate-50 border border-slate-200 p-4 rounded-xl rounded-tl-none relative ml-4">
-                        <div class="absolute -top-3 -left-1 w-4 h-4 bg-slate-50 border-l border-t border-slate-200 transform -rotate-45"></div>
-                        <p class="text-slate-700 italic flex gap-3">
-                            <i class="fas fa-quote-left text-slate-300"></i>
-                            <span id="scenario-thought" class="font-medium">...</span>
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Question Area -->
-                <div id="question-area" class="bg-white rounded-xl shadow-md border border-slate-200 p-6">
-                    <h4 class="text-lg font-bold mb-4 flex items-center gap-2">
-                        <i class="far fa-question-circle text-blue-500"></i>
-                        <span id="question-text">Frage...</span>
-                    </h4>
-                    
-                    <div id="options-container" class="grid grid-cols-1 gap-3">
-                        <!-- Options injected via JS -->
-                    </div>
-
-                    <!-- Feedback Area (Hidden initially) -->
-                    <div id="feedback-area" class="hidden mt-6 p-4 rounded-lg bg-slate-50 border">
-                        <div class="flex gap-3 mb-2">
-                            <div id="feedback-icon" class="text-2xl"></div>
-                            <div>
-                                <h5 id="feedback-title" class="font-bold text-lg"></h5>
-                                <p id="feedback-text" class="text-slate-600"></p>
-                            </div>
+                    <h2 class="text-2xl md:text-3xl font-bold mb-4 text-slate-800">Willkommen im Stress-Labor</h2>
+                    <p class="text-base md:text-lg text-slate-600 mb-8 leading-relaxed">
+                        Trainieren Sie Ihr Verständnis des transaktionalen Stressmodells nach Lazarus. 
+                        Analysieren Sie Situationen aus dem Studienalltag.
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4 mb-8 text-left">
+                        <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-200">
+                            <div class="font-bold text-blue-600 mb-1">1. Primäre Bewertung</div>
+                            <p class="text-xs md:text-sm text-slate-500">Was bedeutet die Situation für mich?</p>
                         </div>
-                        <button onclick="app.nextStep()" class="mt-4 bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition w-full sm:w-auto">Weiter</button>
+                        <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-200">
+                            <div class="font-bold text-blue-600 mb-1">2. Sekundäre Bewertung</div>
+                            <p class="text-xs md:text-sm text-slate-500">Kann ich die Situation bewältigen?</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-200">
+                            <div class="font-bold text-blue-600 mb-1">3. Coping</div>
+                            <p class="text-xs md:text-sm text-slate-500">Wie gehe ich damit um?</p>
+                        </div>
+                    </div>
+                    <button onclick="app.startGame()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-10 rounded-full shadow-lg transition transform hover:scale-105 w-full md:w-auto text-lg">
+                        Training starten
+                    </button>
+                </div>
+
+                <!-- Game Container -->
+                <div id="screen-game" class="w-full max-w-3xl hidden fade-in">
+                    
+                    <!-- Scenario Card -->
+                    <div class="bg-white rounded-2xl shadow-lg border border-slate-200 p-5 md:p-6 mb-6 relative overflow-hidden">
+                        <div class="absolute top-0 left-0 w-2 h-full bg-blue-500"></div>
+                        <div class="flex justify-between items-start mb-2">
+                            <span class="text-xs font-bold tracking-wider text-blue-600 uppercase">Fallbeispiel <span id="scenario-count">1</span>/5</span>
+                            <span class="text-xs font-bold text-slate-400" id="scenario-topic">Thema</span>
+                        </div>
+                        <h3 class="text-xl md:text-2xl font-bold text-slate-800 mb-3" id="scenario-title">Titel</h3>
+                        <p class="text-slate-600 text-base md:text-lg leading-relaxed" id="scenario-desc">Beschreibung...</p>
+                        
+                        <!-- Character Thought Bubble (Dynamic) -->
+                        <div class="mt-6 bg-slate-50 border border-slate-200 p-4 rounded-xl rounded-tl-none relative ml-4">
+                            <div class="absolute -top-3 -left-1 w-4 h-4 bg-slate-50 border-l border-t border-slate-200 transform -rotate-45"></div>
+                            <p class="text-slate-700 italic flex gap-3 text-sm md:text-base">
+                                <i class="fas fa-quote-left text-slate-300"></i>
+                                <span id="scenario-thought" class="font-medium">...</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Question Area -->
+                    <div id="question-area" class="bg-white rounded-xl shadow-md border border-slate-200 p-5 md:p-6 mb-20 md:mb-0">
+                        <h4 class="text-lg font-bold mb-4 flex items-center gap-2">
+                            <i class="far fa-question-circle text-blue-500"></i>
+                            <span id="question-text">Frage...</span>
+                        </h4>
+                        
+                        <div id="options-container" class="grid grid-cols-1 gap-3">
+                            <!-- Options injected via JS -->
+                        </div>
+
+                        <!-- Feedback Area (Hidden initially) -->
+                        <div id="feedback-area" class="hidden mt-6 p-4 rounded-lg bg-slate-50 border">
+                            <div class="flex gap-3 mb-2">
+                                <div id="feedback-icon" class="text-2xl"></div>
+                                <div>
+                                    <h5 id="feedback-title" class="font-bold text-lg"></h5>
+                                    <p id="feedback-text" class="text-slate-600 text-sm md:text-base"></p>
+                                </div>
+                            </div>
+                            <button onclick="app.nextStep()" class="mt-4 bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition w-full shadow-md font-bold text-lg">Weiter</button>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- End Screen -->
-            <div id="screen-end" class="max-w-xl text-center hidden fade-in">
-                <div class="mb-6">
-                    <i class="fas fa-trophy text-yellow-400 text-6xl drop-shadow-sm"></i>
+                <!-- End Screen -->
+                <div id="screen-end" class="max-w-xl text-center hidden fade-in w-full">
+                    <div class="mb-6">
+                        <i class="fas fa-trophy text-yellow-400 text-6xl drop-shadow-sm"></i>
+                    </div>
+                    <h2 class="text-3xl font-bold mb-2">Training abgeschlossen!</h2>
+                    <p class="text-slate-600 mb-6">Sie haben das transaktionale Stressmodell erfolgreich angewendet.</p>
+                    
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 mb-8">
+                        <div class="text-sm text-slate-500 uppercase tracking-wide font-bold mb-1">Ihr Ergebnis</div>
+                        <div class="text-5xl font-bold text-blue-600 mb-2"><span id="final-score">0</span> <span class="text-2xl text-slate-400">Punkte</span></div>
+                        <p id="final-feedback" class="text-slate-600">Feedback Text...</p>
+                    </div>
+
+                    <button onclick="app.resetGame()" class="bg-slate-800 hover:bg-slate-900 text-white font-bold py-3 px-8 rounded-full shadow-lg transition">
+                        Erneut trainieren
+                    </button>
                 </div>
-                <h2 class="text-3xl font-bold mb-2">Training abgeschlossen!</h2>
-                <p class="text-slate-600 mb-6">Sie haben das transaktionale Stressmodell erfolgreich angewendet.</p>
-                
-                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 mb-8">
-                    <div class="text-sm text-slate-500 uppercase tracking-wide font-bold mb-1">Ihr Ergebnis</div>
-                    <div class="text-5xl font-bold text-blue-600 mb-2"><span id="final-score">0</span> <span class="text-2xl text-slate-400">Punkte</span></div>
-                    <p id="final-feedback" class="text-slate-600">Feedback Text...</p>
-                </div>
 
-                <button onclick="app.resetGame()" class="bg-slate-800 hover:bg-slate-900 text-white font-bold py-3 px-8 rounded-full shadow-lg transition">
-                    Erneut trainieren
-                </button>
             </div>
-
         </div>
     </main>
 
@@ -286,6 +292,10 @@
                 this.resetUI();
             },
 
+            resetUI: function() {
+                // Any init logic
+            },
+
             startGame: function() {
                 document.getElementById('screen-welcome').classList.add('hidden');
                 document.getElementById('screen-game').classList.remove('hidden');
@@ -330,10 +340,13 @@
                 const optionsContainer = document.getElementById('options-container');
                 optionsContainer.innerHTML = '';
                 document.getElementById('feedback-area').classList.add('hidden');
+                
+                // Scroll to top of game area on mobile to ensure question is visible
+                // document.getElementById('screen-game').scrollIntoView({ behavior: 'smooth' });
 
                 step.options.forEach((opt, idx) => {
                     const btn = document.createElement('button');
-                    btn.className = "w-full text-left p-4 border border-slate-300 rounded-lg hover:bg-blue-50 hover:border-blue-300 transition flex items-center justify-between group";
+                    btn.className = "w-full text-left p-4 border border-slate-300 rounded-lg hover:bg-blue-50 hover:border-blue-300 transition flex items-center justify-between group bg-white";
                     btn.innerHTML = `<span class="font-medium text-slate-700 group-hover:text-blue-700">${opt.text}</span> <i class="fas fa-chevron-right text-slate-300 group-hover:text-blue-400"></i>`;
                     btn.onclick = () => app.checkAnswer(opt, btn);
                     optionsContainer.appendChild(btn);
@@ -380,6 +393,13 @@
                 }
                 
                 feedbackText.innerText = option.feedback;
+
+                // Auto scroll to feedback on mobile
+                if(window.innerWidth < 768) {
+                    setTimeout(() => {
+                        feedbackArea.scrollIntoView({ behavior: 'smooth', block: 'end' });
+                    }, 100);
+                }
             },
 
             nextStep: function() {
